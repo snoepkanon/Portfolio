@@ -3,8 +3,8 @@ using UnityEngine;
 
 namespace Gun
 {
-    [Serializable]
-    public class GunStats
+    [System.Serializable]
+    public class GunStats : MonoBehaviour
     {
         [Header("Gun Info")]
         [Tooltip("The name of the gun")]public string gunName;

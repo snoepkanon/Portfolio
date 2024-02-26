@@ -100,7 +100,7 @@ namespace Player
                 {
                     if (hit.transform == null)
                     {
-                        targetLeanPos.x = leanDistance;
+                        targetLeanPos.x = -leanDistance;
                         targetLeanPos.y = leanHight;
                         leanInput = 1f;
                         Leaning();
