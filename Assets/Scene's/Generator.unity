@@ -163,7 +163,7 @@ MonoBehaviour:
   generator: {fileID: 0}
   spawnedRoom: {fileID: 0}
   collisionCheckOBJ: {fileID: 0}
-  spawnDoorPoint: {fileID: 0}
+  spawnDoorPoint: {fileID: 1581207565}
   spawnedCollCheck: {fileID: 0}
   checkSpawned: 0
   outSideChecked: 0
@@ -296,7 +296,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &274887154
 MonoBehaviour:
@@ -906,7 +906,7 @@ Transform:
   m_LocalScale: {x: 10, y: 10, z: 10}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1581207564
 GameObject:
@@ -917,7 +917,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1581207565}
-  - component: {fileID: 1581207567}
   - component: {fileID: 1581207566}
   m_Layer: 3
   m_Name: DoorPoint
@@ -953,22 +952,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.1, y: 0.1, z: 0.1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1581207567
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1581207564}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a1cf7c905cbcbb649aa6230104d71e74, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  otherDoorPoint: {fileID: 0}
-  roomManager: {fileID: 58960236}
-  generator: {fileID: 1660766546}
-  roomChecked: 0
 --- !u!1 &1594220123
 GameObject:
   m_ObjectHideFlags: 0
@@ -1050,7 +1033,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1660766545
 GameObject:
@@ -1081,7 +1064,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc1cae82455ece141bf4d2ec81a644e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  difficulty: 2
+  difficulty: 1
   easyRooms: 5
   normalRooms: 10
   hardRooms: 15
@@ -1114,7 +1097,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1711762734
 GameObject:
@@ -1207,5 +1190,5 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}

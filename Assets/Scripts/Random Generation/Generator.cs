@@ -97,11 +97,11 @@ public class Generator : MonoBehaviour
 
     public void RemoveLastRoom()
     {
-        if (dungeonRooms.Count > 1)
+        if (dungeonRooms.Count != 0)
         {
-            Destroy(dungeonRooms[dungeonRooms.Count - 2].GetComponent<RoomManager>().GetSpawnedCollCheck());
             Destroy(dungeonRooms[dungeonRooms.Count -1]);
-            dungeonRooms[dungeonRooms.Count - 2].GetComponent<RoomManager>().RoomReset();   
+            dungeonRooms.RemoveAt(dungeonRooms.Count - 1);
+            dungeonRooms[dungeonRooms.Count -1].GetComponent<RoomManager>().RoomReset();
         }
 
         roomAmount++;
