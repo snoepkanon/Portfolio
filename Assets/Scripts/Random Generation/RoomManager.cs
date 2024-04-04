@@ -4,7 +4,6 @@ using UnityEngine;
 public class RoomManager : MonoBehaviour  
 {                                          
     [Tooltip("Set to true if this is the start for the Dungeon")]public bool firstRoom;
-    [Tooltip("The layer your doorPoints are on")]public LayerMask doorPointLayer;
     [Tooltip("All the door points in a room")]public List<Transform> doorPoints;
     [Tooltip("The centerpont of the room arount wich it can rotate")]public GameObject roomRotPoint;
     [Tooltip("Set to true if you want to spawn a specific room after this one everytime")]public bool useSetRoom;
@@ -16,7 +15,7 @@ public class RoomManager : MonoBehaviour
     [Header("Spawn info")]
     public GameObject collisionCheckOBJ;
     public Transform spawnDoorPoint;
-    public GameObject spawnedCollCheck;
+    GameObject spawnedCollCheck;
     public bool debug;
     [ConditionalHide("debug")][SerializeField]bool checkSpawned;
     [ConditionalHide("debug")][SerializeField]bool outSideChecked;
@@ -170,7 +169,6 @@ public class RoomManager : MonoBehaviour
         }
     }
 
-
     public void checkColl()
     {
         if (checkSpawned)
@@ -212,6 +210,7 @@ public class RoomManager : MonoBehaviour
             generator.dungeonRooms[generator.dungeonRooms.Count - 1].GetComponent<RoomManager>().RoomReset();
             generator.dungeonRooms[generator.dungeonRooms.Count - 2].GetComponent<RoomManager>().RoomReset();
         }
+
         spawnedCollCheck = null;
         spawnedRoom = null;
         roomSpawned = false;

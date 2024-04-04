@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Reflection.Emit;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -11,7 +10,7 @@ public class Generator : MonoBehaviour
         Easy, Medium, Hard
     }
 
-    SeedManager seedManager;
+    public SeedManager seedManager;
     [Header("Dificulty select(hover over most variable names for tooltips)")]
     [Space(10)]
     public Difficulty difficulty;
@@ -57,10 +56,10 @@ public class Generator : MonoBehaviour
         {
             InstanceGen = this;
         }
-        seedManager = SeedManager.InstanceSeed;
+        //qseedManager = SeedManager.InstanceSeed;
 
         DifficultySelect(difficulty);
-        //seedManager.setSeed();
+
         currentRetryAmount = retryAmount;
     }
 

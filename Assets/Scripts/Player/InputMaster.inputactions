@@ -11,8 +11,7 @@
                     "id": "7a945d9f-befe-4527-bb1a-0c5e4d796243",
                     "expectedControlType": "Axis",
                     "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
+                    "interactions": ""
                 },
                 {
                     "name": "Right / Left",
@@ -20,8 +19,7 @@
                     "id": "e2a33453-e32e-47e1-8c73-4f57c06a3430",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
+                    "interactions": ""
                 },
                 {
                     "name": "Jump",
@@ -29,8 +27,7 @@
                     "id": "5955664a-a73b-424b-ae30-9679f39e0532",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
+                    "interactions": ""
                 },
                 {
                     "name": "Sprint",
@@ -38,8 +35,7 @@
                     "id": "e4c30007-3c90-4dd6-bfde-13dbf641183a",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
+                    "interactions": ""
                 },
                 {
                     "name": "Crouch",
@@ -47,8 +43,7 @@
                     "id": "400da329-eff1-46fb-8bb2-695817e3f471",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -163,8 +158,7 @@
                     "id": "9e7d4381-0790-495c-8473-4adbbe2e7393",
                     "expectedControlType": "",
                     "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -191,8 +185,7 @@
                     "id": "5a2e52c2-a1eb-48a2-9915-eb3e36ad098f",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
+                    "interactions": ""
                 },
                 {
                     "name": "LeanRight",
@@ -200,8 +193,7 @@
                     "id": "ecd3e44d-a6d1-485e-9c31-4a6cfe6c2be1",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -239,8 +231,7 @@
                     "id": "7ce76d4c-20a1-46ce-ac0b-2e91c07852fe",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -252,6 +243,33 @@
                     "processors": "",
                     "groups": "",
                     "action": "Fire",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "other",
+            "id": "7dbfbf16-3996-4382-95c8-db1abacb704e",
+            "actions": [
+                {
+                    "name": "Pauze",
+                    "type": "Value",
+                    "id": "63952031-b1f8-4dc7-b321-612dacb60292",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "5077dfa5-9643-4b7d-9603-224f6adb1ea2",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Pauze",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

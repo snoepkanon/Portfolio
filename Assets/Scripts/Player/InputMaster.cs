@@ -1,4 +1,4 @@
-// GENERATED AUTOMATICALLY FROM 'Assets/InputMaster.inputactions'
+// GENERATED AUTOMATICALLY FROM 'Assets/Scripts/Player/InputMaster.inputactions'
 
 using System;
 using System.Collections;
@@ -260,6 +260,33 @@ public class @InputMaster : IInputActionCollection, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""other"",
+            ""id"": ""7dbfbf16-3996-4382-95c8-db1abacb704e"",
+            ""actions"": [
+                {
+                    ""name"": ""Pauze"",
+                    ""type"": ""Value"",
+                    ""id"": ""63952031-b1f8-4dc7-b321-612dacb60292"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""5077dfa5-9643-4b7d-9603-224f6adb1ea2"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pauze"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -281,6 +308,9 @@ public class @InputMaster : IInputActionCollection, IDisposable
         // Shooting
         m_Shooting = asset.FindActionMap("Shooting", throwIfNotFound: true);
         m_Shooting_Fire = m_Shooting.FindAction("Fire", throwIfNotFound: true);
+        // other
+        m_other = asset.FindActionMap("other", throwIfNotFound: true);
+        m_other_Pauze = m_other.FindAction("Pauze", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -498,6 +528,39 @@ public class @InputMaster : IInputActionCollection, IDisposable
         }
     }
     public ShootingActions @Shooting => new ShootingActions(this);
+
+    // other
+    private readonly InputActionMap m_other;
+    private IOtherActions m_OtherActionsCallbackInterface;
+    private readonly InputAction m_other_Pauze;
+    public struct OtherActions
+    {
+        private @InputMaster m_Wrapper;
+        public OtherActions(@InputMaster wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Pauze => m_Wrapper.m_other_Pauze;
+        public InputActionMap Get() { return m_Wrapper.m_other; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(OtherActions set) { return set.Get(); }
+        public void SetCallbacks(IOtherActions instance)
+        {
+            if (m_Wrapper.m_OtherActionsCallbackInterface != null)
+            {
+                @Pauze.started -= m_Wrapper.m_OtherActionsCallbackInterface.OnPauze;
+                @Pauze.performed -= m_Wrapper.m_OtherActionsCallbackInterface.OnPauze;
+                @Pauze.canceled -= m_Wrapper.m_OtherActionsCallbackInterface.OnPauze;
+            }
+            m_Wrapper.m_OtherActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @Pauze.started += instance.OnPauze;
+                @Pauze.performed += instance.OnPauze;
+                @Pauze.canceled += instance.OnPauze;
+            }
+        }
+    }
+    public OtherActions @other => new OtherActions(this);
     public interface IMovementActions
     {
         void OnForwardBackward(InputAction.CallbackContext context);
@@ -518,5 +581,9 @@ public class @InputMaster : IInputActionCollection, IDisposable
     public interface IShootingActions
     {
         void OnFire(InputAction.CallbackContext context);
+    }
+    public interface IOtherActions
+    {
+        void OnPauze(InputAction.CallbackContext context);
     }
 }

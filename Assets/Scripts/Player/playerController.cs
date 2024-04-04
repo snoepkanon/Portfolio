@@ -11,6 +11,7 @@ namespace Player
         public Rigidbody rb;
         public bool inMenu;
         public Inputmanager inputManager;
+        public UIManager uiManager;
 
         [Header("Movement Values")]
         [Tooltip("The walking speed of the player")] public float walkSpeed;
@@ -47,7 +48,7 @@ namespace Player
         private void Start()
         {
             inputManager.inputMaster.Movement.Jump.started += _ => Jump();
-
+            uiManager = UIManager.InstanceUI;
             cam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Transform>();
             baseHight = cam.transform.localPosition.y;
             normalHeight = GetComponent<CapsuleCollider>().height;
@@ -59,10 +60,10 @@ namespace Player
             float leftRight = inputManager.inputMaster.Movement.RightLeft.ReadValue<float>();
             Vector3 move = transform.right * leftRight  + transform.forward * forwardBackward;
 
-            if (!inMenu)
+            /*if (!inMenu)
                 Cursor.lockState = CursorLockMode.Locked;
             else
-                Cursor.lockState = CursorLockMode.None;
+                Cursor.lockState = CursorLockMode.None;*/
 
             if (speed <= walkSpeed && forwardBackward != 0 | leftRight != 0)
             {
@@ -151,6 +152,21 @@ namespace Player
             {
                 float newHeight = Mathf.Lerp(GetComponent<CapsuleCollider>().height, normalHeight, Time.deltaTime * leanSpeed);
                 GetComponent<CapsuleCollider>().height = newHeight;
+            }
+
+            if(Input.GetKeyDown(KeyCode.Escape)) 
+            {
+                if(!inMenu)
+                {
+                    uiManager.pauzeMenu.SetActive(true);
+                    inMenu = true;
+                }
+                else
+                {
+                    uiManager.pauzeMenu.SetActive(false);
+                    inMenu = false;
+
+                }
             }
         }
 
