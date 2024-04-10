@@ -17,8 +17,9 @@ namespace Gun
             Manual, Automatic
         }
 
-        [Header("Gun Info")]
         [Header("Hover over variables for tooltips")]
+        public Animator animator;
+        [Header("Gun Info")]
         [Tooltip("The name of the gun")]public string gunName;
         [Tooltip("What type of weapon is it")] public string gunType;
         [Tooltip("The name of the ammo youre firering")]public string ammoName;
@@ -46,7 +47,7 @@ namespace Gun
         [Tooltip("Allows the gun to go full auto (turn this of if you want it to be single fire)")]public bool fullAuto;
         bool _useBullet;
         bool _useCassing;
-        bool _doubleActionReload;
+        [SerializeField]bool _doubleActionReload;
 
         [Header("Keybinds")]
         public KeyCode shootingKey;
@@ -60,9 +61,10 @@ namespace Gun
             AimToggle = aim;
         }
 
-        public void SetDoublleActionReload(bool doublleActionReloadBool)
+        public void SetDoubleActionReload(bool doubleActionReloadBool)
         {
-            _doubleActionReload = doublleActionReloadBool;
+            _doubleActionReload = doubleActionReloadBool;
+            animator.SetBool("DoubleActionReload", doubleActionReloadBool);
         }
 
         public void SetAmmoPoolInBullets(bool ammoPoolInBulletsBool)
@@ -90,6 +92,7 @@ namespace Gun
         public int currentMagAmmo;
         public float fastReloadDelayTime;
         public List<int> _magList;
+        public GameObject magOBJ;
         //[Header("Privates only shown for debug")]
         int _currentMags;
         int _currentBullets;
@@ -97,7 +100,6 @@ namespace Gun
         float _currentFireCooldown;
         bool _aiming;
         bool _canShoot;
-        bool _magIn;
         float _currentFastReloadDelay;
 
 
@@ -107,7 +109,6 @@ namespace Gun
             _currentBullets = startBulletPool;
             _currentMags = startMagPool;
         }
-
 
         void Update()
         {
@@ -122,6 +123,11 @@ namespace Gun
                 if(!hasAnimevents && _currentFireCooldown <= 0)
                 {
                     Fire();
+                    animator.SetBool("Fire" , true);
+                }
+                else
+                {
+                    animator.SetBool("Fire", true);
                 }
             }
             else if( Input.GetKeyDown(shootingKey))
@@ -129,31 +135,23 @@ namespace Gun
                 if(!hasAnimevents)
                 {
                     Fire();
+                    animator.SetBool("Fire", true);
                 }
-
-                
+                else
+                {
+                    animator.SetBool("Fire", true);
+                }
             }
             else if (Input.GetKeyUp(shootingKey) && currentMagAmmo > 0) 
             {
                 _canShoot = true;
+                animator.SetBool("Fire", false);
             }
 
             if (Input.GetKeyDown(reloadKey))
             {
                 _currentFastReloadDelay = fastReloadDelayTime;
-
-                if (!GetDoublleActionReload())
-                {
-                    SingleActionReload();
-                }
-                else if (GetDoublleActionReload() && _magIn)
-                {
-                    DubbleActionReloadOut();
-                }
-                else if (GetDoublleActionReload() && !_magIn)
-                {
-                    DubbleActionReloadIn();
-                }
+                animator.SetTrigger("Reload");
             }
 
             if (Input.GetKeyDown(reloadKey) && _currentFastReloadDelay > 0)
@@ -164,6 +162,20 @@ namespace Gun
             if (_currentFireCooldown > 0)
             {
                 _currentFireCooldown -= Time.deltaTime;
+            }
+
+            if(currentMagAmmo == 0 && _bulletsInChamber == 0)
+            {
+                animator.SetBool("Fire", false);
+            }
+
+            if(_bulletsInChamber >= 0)
+            {
+                animator.SetBool("BulletInChamber", true);
+            }
+            else
+            {
+                animator.SetBool("BulletInChamber", false);
             }
         }
 
@@ -176,7 +188,7 @@ namespace Gun
 
                     if (_canShoot && currentMagAmmo > 0 || _canShoot && _bulletsInChamber != 0)
                     {
-                        if(currentMagAmmo < magSize && _bulletsInChamber == 0)
+                        if(currentMagAmmo <= magSize && _bulletsInChamber == 0)
                         {
                             _bulletsInChamber++;
                         }
@@ -246,47 +258,55 @@ namespace Gun
             }
         }
 
-        public void DubbleActionReloadOut()
+        public void DoubleActionReloadOut()
         {
-            if(_bulletsInChamber != 0 && !openBolt)
+            if (GetDoublleActionReload())
             {
-                currentMagAmmo = 0;
-                currentMagAmmo += _bulletsInChamber;
+                if(_bulletsInChamber != 0 && !openBolt)
+                {
+                    currentMagAmmo = 0;
+                    currentMagAmmo += _bulletsInChamber;
+                }
+                else if(_bulletsInChamber == 0)
+                {
+                    currentMagAmmo = 0;
+                    animator.SetBool("GunEmpty", true);
+                }
+                animator.SetBool("MagIn", false);
             }
-            else
-            {
-                currentMagAmmo = 0;
-            }
-            _magIn = false;
         }
 
-        public void DubbleActionReloadIn()
+        public void DoubleActionReloadIn()
         {
-            if (ammoPoolInBullets && _currentBullets >= magSize)
+            if (GetDoublleActionReload())
             {
-                _currentBullets -= magSize;
-                currentMagAmmo = magSize;
-                if (_bulletsInChamber > 0 && !openBolt)
+                if (ammoPoolInBullets && _currentBullets >= magSize)
                 {
-                    currentMagAmmo += _bulletsInChamber;
+                    _currentBullets -= magSize;
+                    currentMagAmmo = magSize;
+                    if (_bulletsInChamber > 0 && !openBolt)
+                    {
+                        currentMagAmmo += _bulletsInChamber;
+                    }
+                    _canShoot = true;
                 }
-                _magIn = true;
-                _canShoot = true;
-            }
-            else if (ammoPoolInMags && _currentMags > 0)
-            {
-                _currentMags--;
-                currentMagAmmo = magSize;
-                if (_bulletsInChamber > 0 && !openBolt)
+                else if (ammoPoolInMags && _currentMags > 0)
                 {
-                    currentMagAmmo += _bulletsInChamber;
+                    _currentMags--;
+                    currentMagAmmo = magSize;
+                    if (_bulletsInChamber > 0 && !openBolt)
+                    {
+                        currentMagAmmo += _bulletsInChamber;
+                    }
+                    _canShoot = true;
                 }
-                _magIn = true;
-                _canShoot = true;
-            }
-            else
-            {
-                Debug.LogError("not enough ammo");
+                else
+                {
+                    Debug.LogError("not enough ammo");
+                }
+
+                animator.SetBool("MagIn", true);
+                animator.SetBool("GunEmpty", false);
             }
         }
 
@@ -334,5 +354,17 @@ namespace Gun
                 }
             }
         }
+        public void MagActiveSwitch()
+        {
+            if(magOBJ.activeSelf)
+            {
+                magOBJ.SetActive(false);
+            }
+            else
+            {
+                magOBJ.SetActive(true);
+            }
+        }
     }
+
 }
