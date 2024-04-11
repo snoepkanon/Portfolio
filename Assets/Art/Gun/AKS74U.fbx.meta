@@ -183,7 +183,7 @@ ModelImporter:
       curves: []
       events:
       - time: 0.57229704
-        functionName: DoubleActionReloadOut
+        functionName: DAReloadOut
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
@@ -225,22 +225,22 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.9956613
-        functionName: SingleActionReload
-        data: 
-        objectReferenceParameter: {instanceID: 0}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
-      - time: 1
-        functionName: DoubleActionReloadIn
-        data: 
-        objectReferenceParameter: {instanceID: 0}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
-      - time: 0
+      - time: 0.21981424
         functionName: MagActiveSwitch
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.98142415
+        functionName: DAReloadIn
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.9956613
+        functionName: SAReload
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
@@ -276,7 +276,7 @@ ModelImporter:
       curves: []
       events:
       - time: 0.8185173
-        functionName: DoubleActionReloadOut
+        functionName: DAReloadOut
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
@@ -312,14 +312,14 @@ ModelImporter:
       curves: []
       events:
       - time: 0.9804536
-        functionName: SingleActionReload
+        functionName: SAReload
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
       - time: 1
-        functionName: DoubleActionReloadIn
+        functionName: DAReloadIn
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0

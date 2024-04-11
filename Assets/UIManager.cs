@@ -7,6 +7,7 @@ public class UIManager : MonoBehaviour
     public static UIManager InstanceUI { get; private set; }
 
     public GameObject pauzeMenu;
+    public bool pauzed;
     void Start()
     {
         if (InstanceUI != null && InstanceUI != this)
@@ -23,5 +24,16 @@ public class UIManager : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void Pauze()
+    {
+        pauzed = true;
+        pauzeMenu.SetActive(pauzed);
+    }
+    public void Play()
+    {
+        pauzed = false;
+        pauzeMenu.SetActive(pauzed);
     }
 }

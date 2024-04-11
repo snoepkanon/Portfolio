@@ -19,6 +19,7 @@ namespace Gun
 
         [Header("Hover over variables for tooltips")]
         public Animator animator;
+        public UIManager uiManager;
         [Header("Gun Info")]
         [Tooltip("The name of the gun")]public string gunName;
         [Tooltip("What type of weapon is it")] public string gunType;
@@ -61,7 +62,8 @@ namespace Gun
             AimToggle = aim;
         }
 
-        public void SetDoubleActionReload(bool doubleActionReloadBool)
+        //DA = DoubleAction\\
+        public void SetDAReload(bool doubleActionReloadBool)
         {
             _doubleActionReload = doubleActionReloadBool;
             animator.SetBool("DoubleActionReload", doubleActionReloadBool);
@@ -79,7 +81,8 @@ namespace Gun
 
         //Getters\\
 
-        public bool GetDoublleActionReload()
+        //DA = DoubleAction\\
+        public bool GetDAReload()
         {
             return _doubleActionReload;
         }
@@ -93,14 +96,15 @@ namespace Gun
         public float fastReloadDelayTime;
         public List<int> _magList;
         public GameObject magOBJ;
-        //[Header("Privates only shown for debug")]
+
+        //privates\\
         int _currentMags;
         int _currentBullets;
-        [SerializeField]int _bulletsInChamber;
+        int _bulletsInChamber;
         float _currentFireCooldown;
+        float _currentFastReloadDelay;
         bool _aiming;
         bool _canShoot;
-        float _currentFastReloadDelay;
 
 
         void Start()
@@ -112,8 +116,11 @@ namespace Gun
 
         void Update()
         {
-            AimUpdate();
-            InputUpadte();
+            if (!uiManager.pauzed)
+            {
+                AimUpdate();
+                InputUpadte(); 
+            }
         }
 
         public void InputUpadte()
@@ -125,21 +132,17 @@ namespace Gun
                     Fire();
                     animator.SetBool("Fire" , true);
                 }
-                else
+                else if(_currentFireCooldown <= 0)
                 {
                     animator.SetBool("Fire", true);
                 }
             }
             else if( Input.GetKeyDown(shootingKey))
             {
+                animator.SetBool("Fire", true);
                 if(!hasAnimevents)
                 {
                     Fire();
-                    animator.SetBool("Fire", true);
-                }
-                else
-                {
-                    animator.SetBool("Fire", true);
                 }
             }
             else if (Input.GetKeyUp(shootingKey) && currentMagAmmo > 0) 
@@ -154,7 +157,7 @@ namespace Gun
                 animator.SetTrigger("Reload");
             }
 
-            if (Input.GetKeyDown(reloadKey) && _currentFastReloadDelay > 0)
+            if (Input.GetKeyDown(reloadKey) && _currentFastReloadDelay > 0 && !GetDAReload())
             {
                 //call fast reload here
             }
@@ -228,7 +231,8 @@ namespace Gun
             }
         }
 
-        public void SingleActionReload()
+        //SA = SingleAction\\
+        public void SAReload()
         {
             SavePartialMag();
             _canShoot = false;
@@ -258,9 +262,11 @@ namespace Gun
             }
         }
 
-        public void DoubleActionReloadOut()
+
+        //DA = DoubleAction\\
+        public void DAReloadOut()
         {
-            if (GetDoublleActionReload())
+            if (GetDAReload())
             {
                 if(_bulletsInChamber != 0 && !openBolt)
                 {
@@ -276,9 +282,10 @@ namespace Gun
             }
         }
 
-        public void DoubleActionReloadIn()
+        //DA = DoubleAction\\
+        public void DAReloadIn()
         {
-            if (GetDoublleActionReload())
+            if (GetDAReload())
             {
                 if (ammoPoolInBullets && _currentBullets >= magSize)
                 {
@@ -312,13 +319,16 @@ namespace Gun
 
         public void SavePartialMag()
         {
-            int bulletsLeft = currentMagAmmo;
-            if(_bulletsInChamber != 0 && !openBolt)
+            if(currentMagAmmo > 0)
             {
-                bulletsLeft -= _bulletsInChamber;
-            }
+                int bulletsLeft = currentMagAmmo;
+                if(_bulletsInChamber != 0 && !openBolt)
+                {
+                    bulletsLeft -= _bulletsInChamber;
+                }
             
-            _magList.Add(bulletsLeft);
+                _magList.Add(bulletsLeft);
+            }
         }
 
         public void CasingEject()
@@ -366,5 +376,4 @@ namespace Gun
             }
         }
     }
-
 }

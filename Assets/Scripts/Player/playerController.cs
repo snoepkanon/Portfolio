@@ -9,7 +9,6 @@ namespace Player
     public class playerController : MonoBehaviour
     {
         public Rigidbody rb;
-        public bool inMenu;
         public Inputmanager inputManager;
         public UIManager uiManager;
 
@@ -56,11 +55,19 @@ namespace Player
         
         private void Update()
         {
+            if (!uiManager.pauzed)
+            {
+                InputUpdate(); 
+            }
+        }
+
+        private void InputUpdate()
+        {
             float forwardBackward = inputManager.inputMaster.Movement.ForwardBackward.ReadValue<float>();
             float leftRight = inputManager.inputMaster.Movement.RightLeft.ReadValue<float>();
-            Vector3 move = transform.right * leftRight  + transform.forward * forwardBackward;
+            Vector3 move = transform.right * leftRight + transform.forward * forwardBackward;
 
-            /*if (!inMenu)
+            /*if (!uiManager.pauzed)
                 Cursor.lockState = CursorLockMode.Locked;
             else
                 Cursor.lockState = CursorLockMode.None;*/
@@ -85,7 +92,7 @@ namespace Player
 
             move *= inputManager.inputMaster.Movement.Sprint.ReadValue<float>() == 0 ? speed : currentRunspeed;
 
-            rb.velocity = new Vector3(move.x,rb.velocity.y, move.z);
+            rb.velocity = new Vector3(move.x, rb.velocity.y, move.z);
 
             Vector2 mouseV2 = inputManager.inputMaster.CameraMovement.MouseX.ReadValue<Vector2>() * sensetivity * Time.deltaTime;
 
@@ -154,22 +161,18 @@ namespace Player
                 GetComponent<CapsuleCollider>().height = newHeight;
             }
 
-            if(Input.GetKeyDown(KeyCode.Escape)) 
+            if (Input.GetKeyDown(KeyCode.Escape))
             {
-                if(!inMenu)
+                if (!uiManager.pauzed)
                 {
-                    uiManager.pauzeMenu.SetActive(true);
-                    inMenu = true;
+                    uiManager.Pauze();
                 }
                 else
                 {
-                    uiManager.pauzeMenu.SetActive(false);
-                    inMenu = false;
-
+                    uiManager.Play();
                 }
             }
         }
-
 
         private void OnCollisionEnter(Collision collision)
         {
@@ -202,7 +205,6 @@ namespace Player
 
             cam.localRotation = Quaternion.Euler(xRotation, cam.localRotation.y, currentLeanAngle);
             cam.localPosition = Vector3.Lerp(cam.localPosition, targetLeanPos, Time.deltaTime * leanSpeed);
-
         }
     }
 }
